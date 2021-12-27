@@ -5,7 +5,7 @@ const asyncHandler = require('../middlewares/asyncHandler');
 exports.sendEmail = asyncHandler(async (req, res, next) => {
   let { to, email_body } = req.body;
 
-  if (to == undefined || message == undefined) {
+  if (to == undefined || email_body == undefined) {
     return next(
       new AppError(
         `Please provide \'to' (receiver\'s email) and \'email_body'.`,

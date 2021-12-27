@@ -15,7 +15,7 @@ const sendEmail = async (options) => {
     from: `Test user`,
     to: options.to,
     subject: options.subject,
-    text: options.message,
+    text: options.email_body,
   };
 
   await transporter.sendMail(message);

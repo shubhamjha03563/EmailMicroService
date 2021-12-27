@@ -3,12 +3,12 @@ const AppError = require('../utils/AppError');
 const asyncHandler = require('../middlewares/asyncHandler');
 
 exports.sendEmail = asyncHandler(async (req, res, next) => {
-  let { to, message } = req.body;
+  let { to, email_body } = req.body;
 
   if (to == undefined || message == undefined) {
     return next(
       new AppError(
-        `Please provide \'to' (receiver\'s email) and \'message'.`,
+        `Please provide \'to' (receiver\'s email) and \'email_body'.`,
         403
       )
     );
@@ -17,7 +17,7 @@ exports.sendEmail = asyncHandler(async (req, res, next) => {
   await sendEmail({
     to,
     subject: 'Test',
-    message: `${message}`,
+    message: `${email_body}`,
   });
 
   res.json({ success: true, message: 'Email sent successfully.' });

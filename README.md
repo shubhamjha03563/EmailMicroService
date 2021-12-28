@@ -1,6 +1,8 @@
 # emailService
 Api to send email
 
+To run the server - npm start
+
 Provide body JSON in the form -
 
 {

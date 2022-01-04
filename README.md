@@ -2,7 +2,17 @@
 
 Microservice to send email through Gmail.
 
-To run the server - npm start
+## Install Dependencies
+
+```
+npm install or npm i
+```
+
+## Run App
+
+```
+npm start
+```
 
 Provide body JSON in the form -
 

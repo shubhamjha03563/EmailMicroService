@@ -1,25 +1,42 @@
 const sendEmail = require('../helpers/sendEmail');
 const AppError = require('../utils/AppError');
 const asyncHandler = require('../middlewares/asyncHandler');
+const checkFields = require('../helpers/checkFields');
 
 exports.sendEmail = asyncHandler(async (req, res, next) => {
-  let { to, email_body } = req.body;
+  checkFields(
+    req.body,
+    'body json',
+    ['to', 'from', 'fromName', 'email_password', 'email_body'],
+    next
+  );
 
-  if (to == undefined || email_body == undefined) {
+  let { to, from, fromName, email_password, subject, email_body } = req.body;
+
+  let options = {
+    to,
+    from,
+    fromName,
+    email_password,
+    subject,
+    email_body,
+  };
+
+  try {
+    await sendEmail(options);
+
+    res.json({
+      success: true,
+      message: 'Email sent successfully.',
+      data: null,
+    });
+  } catch (err) {
     return next(
       new AppError(
-        `Please provide \'to' (receiver\'s email) and \'email_body'.`,
-        403
+        `Email could not be sent. Please check the email credentials OR enable login from less secure apps (https://www.google.com/settings/security/lesssecureapps).`
       )
     );
   }
 
-  await sendEmail({
-    to,
-    subject: 'Test',
-    message: `${email_body}`,
-  });
-
-  res.json({ success: true, message: 'Email sent successfully.' });
   next();
 });
